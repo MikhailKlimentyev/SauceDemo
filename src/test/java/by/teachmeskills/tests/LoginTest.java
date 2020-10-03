@@ -11,8 +11,10 @@ public class LoginTest extends BaseTest {
     @Test
     public void productsPageShouldBeOpenedAfterSuccessfulLogin() {
         loginPage.openPage();
-        loginPage.login(STANDARD_USER_USER_NAME, PASSWORD);
+        loginPage.isPageOpened();
 
+        loginPage.login(STANDARD_USER_USER_NAME, PASSWORD);
+        productsPage.isPageOpened();
         String productsLabel = productsPage.getProductsLabel();
         productsSteps.productsLabelShouldBeLike(productsLabel, "Products");
 
@@ -23,10 +25,14 @@ public class LoginTest extends BaseTest {
     @Test
     public void logoutShouldLeadToLoginPage() {
         loginPage.openPage();
+        loginPage.isPageOpened();
+
         loginPage.login(STANDARD_USER_USER_NAME, PASSWORD);
         MenuPage menuPage = productsPage.openMenu();
-        menuPage.logOut();
+        menuPage.isPageOpened();
 
+        menuPage.logOut();
+        loginPage.isPageOpened();
         boolean isLoginDisplayed = loginPage.isElementDisplayed(LOGIN_BUTTON);
         String pageUrl = loginPage.getPageUrl();
         loginSteps.loginPageShouldBeOpened(isLoginDisplayed, pageUrl, LOGIN_PAGE_URL);
@@ -35,6 +41,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void errorMessageShouldAppearOnAttemptToLoginAsLockedUser() {
         loginPage.openPage();
+        loginPage.isPageOpened();
         loginPage.login(LOCKED_OUT_USER_USER_NAME, PASSWORD);
         String errorMessage = loginPage.getLockedUserMessage();
         loginSteps.errorMessageShouldAppearAfterLoginByLockedUser(errorMessage, LOCKED_USER_ERROR_MESSAGE);

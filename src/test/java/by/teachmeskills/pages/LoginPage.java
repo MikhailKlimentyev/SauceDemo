@@ -1,7 +1,10 @@
 package by.teachmeskills.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import static by.teachmeskills.domain.Constants.BASE_URL;
 
@@ -31,5 +34,13 @@ public class LoginPage extends BasePage {
 
     public String getLockedUserMessage() {
         return driver.findElement(ERROR_MESSAGE).getText();
+    }
+
+    public void isPageOpened() {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
+        } catch (TimeoutException ex) {
+            Assert.fail("Login Page is not opened");
+        }
     }
 }
