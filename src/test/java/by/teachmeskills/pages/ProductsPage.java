@@ -1,9 +1,12 @@
 package by.teachmeskills.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,15 +21,21 @@ public class ProductsPage extends BasePage {
     public static final By PRODUCTS_SORT_DROPDOWN_LOCATOR = By.cssSelector("select.product_sort_container");
     public static final By MENU_LOCATOR = By.xpath("//button[contains(text(),'Open Menu')]");
 
-    public final String addToCartRemoveFromCartLocator = "//*[contains(text(),'%s')]/ancestor::" +
-            "div[@class='inventory_item']//button";
+    public final String commonPathForAddRemoveButton = "//*[contains(text(),'%s')]/ancestor::" +
+            "*[@class='inventory_item']";
+    public final String addRemoveButtonForProductName = commonPathForAddRemoveButton
+            + "//button";
+    public final String removeButtonForProductName = commonPathForAddRemoveButton
+            + "//button[contains(@class,'tn_secondary')]";
+    public final String addButtonForProductName = commonPathForAddRemoveButton
+            + "//button[contains(@class,'btn_primary')]";
 
     public ProductsPage(WebDriver driver) {
         super(driver);
     }
 
     public void addToCartRemoveFromCart(String productName) {
-        driver.findElement(By.xpath(String.format(addToCartRemoveFromCartLocator, productName))).click();
+        driver.findElement(By.xpath(String.format(addRemoveButtonForProductName, productName))).click();
     }
 
     public String getProductsLabel() {
@@ -56,11 +65,53 @@ public class ProductsPage extends BasePage {
     }
 
     public String getAddToCartRemoveButtonName(String productName) {
-        return driver.findElement(By.xpath(String.format(addToCartRemoveFromCartLocator, productName))).getText();
+        return driver.findElement(By.xpath(String.format(addRemoveButtonForProductName, productName))).getText();
     }
 
     public MenuPage openMenu() {
         driver.findElement(MENU_LOCATOR).click();
         return new MenuPage(driver);
+    }
+
+    public void isPageOpened() {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(PRODUCTS_LABEL_LOCATOR));
+        } catch (TimeoutException ex) {
+            Assert.fail("Products Page is not opened");
+        }
+    }
+
+    public void areNamesVisible() {
+        try {
+            wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(PRODUCTS_ITEM_NAME_LOCATOR));
+        } catch (TimeoutException ex) {
+            Assert.fail("Names are not opened");
+        }
+    }
+
+    public void arePricesVisible() {
+        try {
+            wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(PRODUCTS_ITEM_PRICE_LOCATOR));
+        } catch (TimeoutException ex) {
+            Assert.fail("Prices are not visible");
+        }
+    }
+
+    public void isRemoveButtonVisible(String productName) {
+        try {
+            wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(
+                    String.format(removeButtonForProductName, productName))));
+        } catch (TimeoutException ex) {
+            Assert.fail("Remove button is not visible");
+        }
+    }
+
+    public void isAddButtonVisible(String productName) {
+        try {
+            wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(
+                    String.format(addButtonForProductName, productName))));
+        } catch (TimeoutException ex) {
+            Assert.fail("Add button is not visible");
+        }
     }
 }
