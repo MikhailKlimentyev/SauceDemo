@@ -1,7 +1,10 @@
 package by.teachmeskills.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import static by.teachmeskills.domain.Constants.BASE_URL;
 
@@ -35,5 +38,13 @@ public class CartPage extends BasePage {
 
     public void clickOnCheckOutButton() {
         driver.findElement(CHECKOUT_BUTTON).click();
+    }
+
+    public void isPageOpened() {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(CHECKOUT_BUTTON));
+        } catch (TimeoutException ex) {
+            Assert.fail("Cart Page is not opened");
+        }
     }
 }
