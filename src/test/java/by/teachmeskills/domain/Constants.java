@@ -15,6 +15,8 @@ public final class Constants {
     public static final String TEST_ALL_THE_THINGS_T_SHIRT_RED_NAME = "Test.allTheThings() T-Shirt (Red)";
 
     public static final String LOCKED_USER_ERROR_MESSAGE = "Epic sadface: Sorry, this user has been locked out.";
+    public static final String INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE =
+            "Username and password do not match any user in this service";
 
     public static final String SAUCE_LABS_FLEECE_JACKET_PRICE = "$49.99";
     public static final String SAUCE_LABS_BACKPACK_PRICE = "$29.99";

@@ -1,5 +1,6 @@
 package by.teachmeskills.pages;
 
+import by.teachmeskills.pages.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -22,25 +23,31 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    public void openPage() {
-        driver.get(LOGIN_PAGE_URL);
-    }
-
-    public void login(String username, String password) {
+    public ProductsPage login(String username, String password) {
         driver.findElement(USERNAME_INPUT).sendKeys(username);
         driver.findElement(PASSWORD_INPUT).sendKeys(password);
         driver.findElement(LOGIN_BUTTON).click();
+        return new ProductsPage(driver);
     }
 
     public String getLockedUserMessage() {
         return driver.findElement(ERROR_MESSAGE).getText();
     }
 
-    public void isPageOpened() {
+    @Override
+    public LoginPage openPage() {
+        driver.get(LOGIN_PAGE_URL);
+        return this;
+    }
+
+    @Override
+    public LoginPage isPageOpened() {
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
         } catch (TimeoutException ex) {
-            Assert.fail("Login Page is not opened");
+            Assert.fail("Login page is not opened");
+        } finally {
+            return this;
         }
     }
 }

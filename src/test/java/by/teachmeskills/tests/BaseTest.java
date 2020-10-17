@@ -1,6 +1,8 @@
 package by.teachmeskills.tests;
 
-import by.teachmeskills.pages.*;
+import by.teachmeskills.pages.CartPage;
+import by.teachmeskills.pages.LoginPage;
+import by.teachmeskills.pages.ProductsPage;
 import by.teachmeskills.steps.CartSteps;
 import by.teachmeskills.steps.FinishSteps;
 import by.teachmeskills.steps.LoginSteps;
@@ -12,16 +14,16 @@ import org.testng.annotations.BeforeMethod;
 
 import java.util.concurrent.TimeUnit;
 
+import static by.teachmeskills.domain.Constants.PASSWORD;
+import static by.teachmeskills.domain.Constants.STANDARD_USER_USER_NAME;
+
+
 public class BaseTest {
 
     protected WebDriver driver;
 
     protected LoginPage loginPage;
-    protected ProductsPage productsPage;
     protected CartPage cartPage;
-    protected CheckoutInformationPage checkoutInformationPage;
-    protected CheckoutOverviewPage checkoutOverviewPage;
-    protected FinishPage finishPage;
     protected CartSteps cartSteps;
     protected ProductsSteps productsSteps;
     protected LoginSteps loginSteps;
@@ -41,13 +43,17 @@ public class BaseTest {
         driver.quit();
     }
 
+    public ProductsPage safelyLogin() {
+        return loginPage
+                .openPage()
+                .isPageOpened()
+                .login(STANDARD_USER_USER_NAME, PASSWORD)
+                .isPageOpened();
+    }
+
     private void createInstances() {
         loginPage = new LoginPage(driver);
-        productsPage = new ProductsPage(driver);
         cartPage = new CartPage(driver);
-        checkoutInformationPage = new CheckoutInformationPage(driver);
-        checkoutOverviewPage = new CheckoutOverviewPage(driver);
-        finishPage = new FinishPage(driver);
         cartSteps = new CartSteps();
         productsSteps = new ProductsSteps();
         loginSteps = new LoginSteps();

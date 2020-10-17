@@ -1,5 +1,7 @@
 package by.teachmeskills.steps;
 
+import by.teachmeskills.pages.ProductsPage;
+
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -24,7 +26,6 @@ public class ProductsSteps {
                                                   Map<String, String> expectedProductNamesPricesMap) {
         assertEquals(actualProductNamesPricesMap.size(), expectedProductNamesPricesMap.size(),
                 "Actual product quantity do not match expected");
-
         Iterator actualEntries = actualProductNamesPricesMap.entrySet().iterator();
         Iterator expectedEntries = expectedProductNamesPricesMap.entrySet().iterator();
         while (actualEntries.hasNext() && expectedEntries.hasNext()) {
@@ -33,6 +34,30 @@ public class ProductsSteps {
             assertEquals(actualEntry.getKey(), expectedEntry.getKey(), "Keys do not coincide");
             assertEquals(actualEntry.getValue(), expectedEntry.getValue(), "Values do not coincide");
         }
+    }
+
+    public void productCountInShoppingCartShouldBeLikeAfterEachProductAddingRemoving(ProductsPage productsPage,
+                                                                                     Set<String> productNames,
+                                                                                     int startProductNumber,
+                                                                                     boolean isIncreaseCount) {
+        int expectedProductCount = startProductNumber;
+        for (String productName : productNames) {
+            productsPage.addToCartRemoveFromCart(productName);
+            String actualProductCount = productsPage.getProductsNumberInShoppingCart();
+            expectedProductCount = increaseOrDecreaseCount(isIncreaseCount, expectedProductCount);
+            productNumberShouldBeLike(actualProductCount, String.valueOf(expectedProductCount));
+        }
+    }
+
+    public int increaseOrDecreaseCount(boolean isIncreaseCount, int count) {
+        return isIncreaseCount ? ++count : --count;
+    }
+
+    public void productNumberShouldBeLike(String actualProductNumber, String expectedProductNumber) {
+        if (expectedProductNumber.equals("0")) {
+            expectedProductNumber = "";
+        }
+        assertEquals(actualProductNumber, expectedProductNumber);
     }
 
     public Map<String, String> sortProducts(Map<String, Double> productsNamePriceMap, String sortingParameter,
