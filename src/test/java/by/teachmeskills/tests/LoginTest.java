@@ -2,13 +2,17 @@ package by.teachmeskills.tests;
 
 import by.teachmeskills.pages.ModalMenuPage;
 import by.teachmeskills.pages.ProductsPage;
+import by.teachmeskills.tests.listeners.RetryAnalyzer;
+import by.teachmeskills.tests.listeners.TestListener;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static by.teachmeskills.domain.Constants.*;
 import static by.teachmeskills.pages.LoginPage.LOGIN_BUTTON;
 import static by.teachmeskills.pages.LoginPage.LOGIN_PAGE_URL;
 
+@Listeners(TestListener.class)
 public class LoginTest extends BaseTest {
 
     @DataProvider(name = "invalidUserNameAndInvalidPasswordDataProvider")
@@ -19,7 +23,7 @@ public class LoginTest extends BaseTest {
         };
     }
 
-    @Test
+    @Test(description = "Products page should be opened after successful login")
     public void productsPageShouldBeOpenedAfterSuccessfulLogin() {
         ProductsPage productsPage = safelyLogin();
         String productsLabel = productsPage.getProductsLabel();
@@ -29,7 +33,8 @@ public class LoginTest extends BaseTest {
         productsSteps.productsNumberShouldBeLike(productItemsNumber, 6);
     }
 
-    @Test
+    @Test(description = "Logout should lead to login page",
+            retryAnalyzer = RetryAnalyzer.class)
     public void logoutShouldLeadToLoginPage() {
         ProductsPage productsPage = safelyLogin();
         ModalMenuPage modalMenuPage = productsPage
@@ -45,7 +50,7 @@ public class LoginTest extends BaseTest {
         loginSteps.loginPageShouldBeOpened(isLoginDisplayed, pageUrl, LOGIN_PAGE_URL);
     }
 
-    @Test
+    @Test(description = "Error message should appear on attempt to login as locked user")
     public void errorMessageShouldAppearOnAttemptToLoginAsLockedUser() {
         loginPage
                 .openPage()
@@ -56,7 +61,8 @@ public class LoginTest extends BaseTest {
         loginSteps.errorMessageShouldAppearAfterLoginByLockedUser(errorMessage, LOCKED_USER_ERROR_MESSAGE);
     }
 
-    @Test(dataProvider = "invalidUserNameAndInvalidPasswordDataProvider")
+    @Test(description = "Error message should appear on attempt to login with invalid username and password",
+            dataProvider = "invalidUserNameAndInvalidPasswordDataProvider")
     public void errorMessageShouldAppearOnAttemptToLoginWithInvalidUsernameAndPassword(String userName,
                                                                                        String password) {
         loginPage

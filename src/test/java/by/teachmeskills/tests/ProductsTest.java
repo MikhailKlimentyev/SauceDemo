@@ -2,7 +2,9 @@ package by.teachmeskills.tests;
 
 import by.teachmeskills.pages.CartPage;
 import by.teachmeskills.pages.ProductsPage;
+import by.teachmeskills.tests.listeners.TestListener;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Set;
 
 import static by.teachmeskills.domain.Constants.*;
 
+@Listeners(TestListener.class)
 public class ProductsTest extends BaseTest {
 
     @DataProvider(name = "dropdownValuesSortingParametersDataProvider")
@@ -22,7 +25,7 @@ public class ProductsTest extends BaseTest {
         };
     }
 
-    @Test
+    @Test(description = "Product should be added into cart")
     public void productShouldBeAddedIntoCart() {
         ProductsPage productsPage = safelyLogin();
         productsPage
@@ -37,7 +40,8 @@ public class ProductsTest extends BaseTest {
                 "1");
     }
 
-    @Test(dataProvider = "dropdownValuesSortingParametersDataProvider")
+    @Test(description = "Products should be sorted by name and by price in direct and reverse order",
+            dataProvider = "dropdownValuesSortingParametersDataProvider")
     public void productsShouldBeSortedByNameAndByPriceInDirectAndReverseOrder(String dropdownValue,
                                                                               String sortingParameter,
                                                                               boolean sortingOrder) {
@@ -53,7 +57,7 @@ public class ProductsTest extends BaseTest {
         productsSteps.productNamesAndPricesShouldBeLike(productsNamePriceMap, expectedProductsNamePriceMap);
     }
 
-    @Test
+    @Test(description = "Button to add remove product should change name after adding or removing product")
     public void buttonToAddRemoveProductShouldChangeNameAfterAddingRemovingProduct() {
         ProductsPage productsPage = safelyLogin();
         String removeButtonName = productsPage
@@ -69,7 +73,8 @@ public class ProductsTest extends BaseTest {
         productsSteps.buttonNameShouldBeLike(addToCartButtonName, ADD_TO_CART_BUTTON_NAME);
     }
 
-    @Test
+    @Test(description = "Product count in shopping cart should be increased" +
+            "after product adding and decreased after product removing")
     public void productCountInShoppingCartShouldBeIncreasedAfterProductAddingAndDecreasedAfterProductRemoving() {
         ProductsPage productsPage = safelyLogin();
         Set<String> productNames = PRODUCT_NAME_PRICE_MAP.keySet();
@@ -79,7 +84,7 @@ public class ProductsTest extends BaseTest {
                 6, false);
     }
 
-    @Test
+    @Test(description = "Empty shopping cart opens after click on cart")
     public void emptyShoppingCartOpensAfterClickOnCart() {
         ProductsPage productsPage = safelyLogin();
         CartPage cartPage = productsPage
@@ -88,7 +93,7 @@ public class ProductsTest extends BaseTest {
         cartSteps.cartPageShouldBeOpened(cartPage);
     }
 
-    @Test
+    @Test(description = "Shopping cart with one product opens after click on cart")
     public void shoppingCartWithOneProductOpensAfterClickOnCart() {
         ProductsPage productsPage = safelyLogin();
         productsPage

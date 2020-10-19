@@ -4,13 +4,16 @@ import by.teachmeskills.pages.CheckoutInformationPage;
 import by.teachmeskills.pages.CheckoutOverviewPage;
 import by.teachmeskills.pages.FinishPage;
 import by.teachmeskills.pages.ProductsPage;
+import by.teachmeskills.tests.listeners.TestListener;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static by.teachmeskills.domain.Constants.*;
 
+@Listeners(TestListener.class)
 public class FinishTest extends BaseTest {
 
-    @Test
+    @Test(description = "Thanks for order message should appear after successful order")
     public void thanksForOrderMessageShouldAppearAfterSuccessfulOrder() {
         ProductsPage productsPage = safelyLogin();
         productsPage
