@@ -14,6 +14,6 @@ public class LoginSteps {
 
     public void errorMessageShouldAppearAfterLoginByLockedUser(String actualErrorMessage,
                                                                String expectedErrorMessage) {
-        assertEquals(actualErrorMessage, actualErrorMessage, "Error messages do not coincide");
+        assertEquals(actualErrorMessage, actualErrorMessage, expectedErrorMessage);
     }
 }
