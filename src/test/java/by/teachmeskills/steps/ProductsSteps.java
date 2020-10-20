@@ -57,7 +57,7 @@ public class ProductsSteps {
         if (expectedProductNumber.equals("0")) {
             expectedProductNumber = "";
         }
-        assertEquals(actualProductNumber, expectedProductNumber);
+        assertEquals(actualProductNumber, expectedProductNumber, "Product number does not match");
     }
 
     public Map<String, String> sortProducts(Map<String, Double> productsNamePriceMap, String sortingParameter,
