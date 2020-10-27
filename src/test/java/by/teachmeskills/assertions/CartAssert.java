@@ -1,4 +1,4 @@
-package by.teachmeskills.steps;
+package by.teachmeskills.assertions;
 
 import by.teachmeskills.pages.CartPage;
 
@@ -8,7 +8,7 @@ import java.util.List;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class CartSteps {
+public class CartAssert {
 
     public void productDetailsShouldBeLike(String actualProductPrice, String actualProductQuantity,
                                            String expectedProductPrice, String expectedProductQuantity) {

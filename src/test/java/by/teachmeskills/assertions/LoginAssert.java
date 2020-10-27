@@ -1,10 +1,10 @@
-package by.teachmeskills.steps;
+package by.teachmeskills.assertions;
 
 import org.testng.Assert;
 
 import static org.testng.Assert.assertEquals;
 
-public class LoginSteps {
+public class LoginAssert {
 
     public void loginPageShouldBeOpened(boolean actualDisplayingState, String actualURL,
                                         String expectedURL) {

@@ -1,6 +1,8 @@
 package by.teachmeskills.pages;
 
 import by.teachmeskills.pages.base.ModalBasePage;
+import by.teachmeskills.utils.AllureUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -16,8 +18,10 @@ public class ModalMenuPage extends ModalBasePage {
         super(driver);
     }
 
+    @Step("Log out")
     public LoginPage logOut() {
         driver.findElement(LOGOUT_LOCATOR).click();
+        AllureUtils.takeScreenshot(driver);
         return new LoginPage(driver);
     }
 

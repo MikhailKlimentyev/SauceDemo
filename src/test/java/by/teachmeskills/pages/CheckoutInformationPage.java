@@ -1,6 +1,8 @@
 package by.teachmeskills.pages;
 
 import by.teachmeskills.pages.base.BasePage;
+import by.teachmeskills.utils.AllureUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -24,21 +26,27 @@ public class CheckoutInformationPage extends BasePage {
         super(driver);
     }
 
+    @Step("Fill in information with {firstName} firstName, {lastName} lastName, {postalCode} postalCode")
     public CheckoutInformationPage fillInformation(String firstName, String lastName, String postalCode) {
         driver.findElement(FIRST_NAME_INPUT_LOCATOR).sendKeys(firstName);
         driver.findElement(LAST_NAME_INPUT_LOCATOR).sendKeys(lastName);
         driver.findElement(POSTAL_CODE_INPUT_LOCATOR).sendKeys(postalCode);
+        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
+    @Step("Click on continue button")
     public CheckoutOverviewPage clickOnContinueButton() {
         driver.findElement(CART_BUTTON_LOCATOR).click();
+        AllureUtils.takeScreenshot(driver);
         return new CheckoutOverviewPage(driver);
     }
 
+    @Step("Open checkout information page")
     @Override
     public CheckoutInformationPage openPage() {
         driver.get(CHECKOUT_INFORMATION_PAGE_URL);
+        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
