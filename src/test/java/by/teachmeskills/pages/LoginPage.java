@@ -1,6 +1,8 @@
 package by.teachmeskills.pages;
 
 import by.teachmeskills.pages.base.BasePage;
+import by.teachmeskills.utils.AllureUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -23,20 +25,29 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    public ProductsPage login(String username, String password) {
-        driver.findElement(USERNAME_INPUT).sendKeys(username);
-        driver.findElement(PASSWORD_INPUT).sendKeys(password);
-        driver.findElement(LOGIN_BUTTON).click();
+    @Step("Login with {username} and {password}")
+    public ProductsPage loginSafely(String username, String password) {
+        login(username, password);
+        AllureUtils.takeScreenshot(driver);
         return new ProductsPage(driver);
+    }
+
+    @Step("Login with {username} and {password}")
+    public LoginPage tryLogin(String username, String password) {
+        login(username, password);
+        AllureUtils.takeScreenshot(driver);
+        return this;
     }
 
     public String getLockedUserMessage() {
         return driver.findElement(ERROR_MESSAGE).getText();
     }
 
+    @Step("Open login page")
     @Override
     public LoginPage openPage() {
         driver.get(LOGIN_PAGE_URL);
+        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
@@ -49,5 +60,11 @@ public class LoginPage extends BasePage {
         } finally {
             return this;
         }
+    }
+
+    private void login(String username, String password) {
+        driver.findElement(USERNAME_INPUT).sendKeys(username);
+        driver.findElement(PASSWORD_INPUT).sendKeys(password);
+        driver.findElement(LOGIN_BUTTON).click();
     }
 }

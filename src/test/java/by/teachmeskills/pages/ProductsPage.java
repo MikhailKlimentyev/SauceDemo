@@ -1,6 +1,8 @@
 package by.teachmeskills.pages;
 
 import by.teachmeskills.pages.base.BasePage;
+import by.teachmeskills.utils.AllureUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -42,13 +44,43 @@ public class ProductsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Add {productName} to cart")
+    public ProductsPage addToCart(String productName) {
+        String buttonName = driver.findElement(By.xpath(String.format(addRemoveButtonForProductName, productName)))
+                .getText();
+        if (buttonName.equals("ADD TO CART")) {
+            addToCartRemoveFromCart(productName);
+        } else {
+            AllureUtils.takeScreenshot(driver);
+            Assert.fail(String.format("There is no Add to cart button for %s product", productName));
+        }
+        AllureUtils.takeScreenshot(driver);
+        return this;
+    }
+
+    @Step("Remove {productName} from cart")
+    public ProductsPage removeFromCart(String productName) {
+        String buttonName = driver.findElement(By.xpath(String.format(addRemoveButtonForProductName, productName)))
+                .getText();
+        if (buttonName.equals("REMOVE")) {
+            addToCartRemoveFromCart(productName);
+        } else {
+            AllureUtils.takeScreenshot(driver);
+            Assert.fail(String.format("There is no Remove button for %s product", productName));
+        }
+        AllureUtils.takeScreenshot(driver);
+        return this;
+    }
+
     public ProductsPage addToCartRemoveFromCart(String productName) {
         driver.findElement(By.xpath(String.format(addRemoveButtonForProductName, productName))).click();
         return this;
     }
 
+    @Step("Click on cart")
     public CartPage clickOnCart() {
         driver.findElement(SHOPPING_CART_ICON_LOCATOR).click();
+        AllureUtils.takeScreenshot(driver);
         return new CartPage(driver);
     }
 
@@ -77,9 +109,11 @@ public class ProductsPage extends BasePage {
         return productsNamePriceMap;
     }
 
+    @Step("Select dropdown option {dropDownValue}")
     public ProductsPage selectOptionInDropdown(String dropDownValue) {
         Select dropdown = new Select(driver.findElement(PRODUCTS_SORT_DROPDOWN_LOCATOR));
         dropdown.selectByValue(dropDownValue);
+        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
@@ -87,8 +121,10 @@ public class ProductsPage extends BasePage {
         return driver.findElement(By.xpath(String.format(addRemoveButtonForProductName, productName))).getText();
     }
 
+    @Step("Open menu")
     public ModalMenuPage openMenu() {
         driver.findElement(MENU_LOCATOR).click();
+        AllureUtils.takeScreenshot(driver);
         return new ModalMenuPage(driver);
     }
 
@@ -134,9 +170,11 @@ public class ProductsPage extends BasePage {
         }
     }
 
+    @Step("Open products page")
     @Override
     public ProductsPage openPage() {
         driver.get(PRODUCTS_PAGE_URL);
+        AllureUtils.takeScreenshot(driver);
         return this;
     }
 

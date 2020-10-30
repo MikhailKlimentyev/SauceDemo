@@ -1,4 +1,4 @@
-package by.teachmeskills.steps;
+package by.teachmeskills.assertions;
 
 import by.teachmeskills.pages.ProductsPage;
 
@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import static java.util.stream.Collectors.toMap;
 import static org.testng.Assert.assertEquals;
 
-public class ProductsSteps {
+public class ProductsAssert {
 
     public void productsLabelShouldBeLike(String actualLabel, String expectedLabel) {
         assertEquals(actualLabel, expectedLabel, "Label is not correct");
