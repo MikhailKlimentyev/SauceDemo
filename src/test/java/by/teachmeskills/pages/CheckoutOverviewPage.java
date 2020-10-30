@@ -1,6 +1,8 @@
 package by.teachmeskills.pages;
 
 import by.teachmeskills.pages.base.BasePage;
+import by.teachmeskills.utils.AllureUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -21,14 +23,18 @@ public class CheckoutOverviewPage extends BasePage {
         super(driver);
     }
 
+    @Step("Click on finish button")
     public FinishPage clickOnFinishButton() {
         driver.findElement(FINISH_BUTTON_LOCATOR).click();
+        AllureUtils.takeScreenshot(driver);
         return new FinishPage(driver);
     }
 
+    @Step("Open checkout overview page")
     @Override
     public CheckoutOverviewPage openPage() {
         driver.get(CHECKOUT_OVERVIEW_PAGE_URL);
+        AllureUtils.takeScreenshot(driver);
         return this;
     }
 

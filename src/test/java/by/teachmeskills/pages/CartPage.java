@@ -1,6 +1,8 @@
 package by.teachmeskills.pages;
 
 import by.teachmeskills.pages.base.BasePage;
+import by.teachmeskills.utils.AllureUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -42,18 +44,24 @@ public class CartPage extends BasePage {
         return driver.findElement(By.xpath(String.format(quantityPattern, productName))).getText();
     }
 
+    @Step("Click on check out button")
     public CheckoutInformationPage clickOnCheckOutButton() {
         driver.findElement(CHECKOUT_BUTTON_LOCATOR).click();
+        AllureUtils.takeScreenshot(driver);
         return new CheckoutInformationPage(driver);
     }
 
+    @Step("Click on continue shopping button")
     public ProductsPage clickOnContinueShoppingButton() {
         driver.findElement(CONTINUE_SHOPPING_LOCATOR).click();
+        AllureUtils.takeScreenshot(driver);
         return new ProductsPage(driver);
     }
 
+    @Step("Click on remove button for {productName}")
     public CartPage clickOnRemoveButton(String productName) {
         driver.findElement(By.xpath(String.format(removeButtonPattern, productName))).click();
+        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
@@ -61,13 +69,11 @@ public class CartPage extends BasePage {
         return driver.findElements(PRODUCT_IN_SHOPPING_CART_LOCATOR);
     }
 
-    public List<WebElement> getProductsInShoppingCartByProductName(String productName) {
-        return driver.findElements(By.xpath(String.format(productInCartPattern, productName)));
-    }
-
+    @Step("Open cart page")
     @Override
     public CartPage openPage() {
         driver.get(CART_PAGE_URL);
+        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
