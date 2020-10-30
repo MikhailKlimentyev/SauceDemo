@@ -55,7 +55,7 @@ public class BaseTest {
         return loginPage
                 .openPage()
                 .isPageOpened()
-                .loginSafely(STANDARD_USER_USER_NAME, PASSWORD)
+                .loginSafely(System.getenv("User"), System.getenv("Pass"))
                 .isPageOpened();
     }
 
