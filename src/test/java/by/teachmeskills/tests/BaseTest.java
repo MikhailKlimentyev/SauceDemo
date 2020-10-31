@@ -9,6 +9,7 @@ import by.teachmeskills.pages.LoginPage;
 import by.teachmeskills.pages.ProductsPage;
 import by.teachmeskills.tests.listeners.TestListener;
 import by.teachmeskills.utils.CapabilitiesGenerator;
+import by.teachmeskills.utils.PropertyReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestContext;
@@ -17,9 +18,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 
 import java.util.concurrent.TimeUnit;
-
-import static by.teachmeskills.domain.Constants.PASSWORD;
-import static by.teachmeskills.domain.Constants.STANDARD_USER_USER_NAME;
 
 @Listeners(TestListener.class)
 public class BaseTest {
@@ -53,8 +51,12 @@ public class BaseTest {
         return loginPage
                 .openPage()
                 .isPageOpened()
-                .loginSafely(STANDARD_USER_USER_NAME, PASSWORD)
+                .loginSafely(getEnvOrReadProperty("User"), getEnvOrReadProperty("Pass"))
                 .isPageOpened();
+    }
+
+    protected String getEnvOrReadProperty(String key) {
+        return System.getenv().getOrDefault(key, PropertyReader.getProperty(key));
     }
 
     private void createInstances() {
