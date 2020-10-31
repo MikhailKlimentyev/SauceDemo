@@ -9,6 +9,7 @@ import by.teachmeskills.pages.LoginPage;
 import by.teachmeskills.pages.ProductsPage;
 import by.teachmeskills.tests.listeners.TestListener;
 import by.teachmeskills.utils.CapabilitiesGenerator;
+import by.teachmeskills.utils.PropertyReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestContext;
@@ -50,8 +51,12 @@ public class BaseTest {
         return loginPage
                 .openPage()
                 .isPageOpened()
-                .loginSafely(System.getenv("User"), System.getenv("Pass"))
+                .loginSafely(getEnvOrReadProperty("User"), getEnvOrReadProperty("Pass"))
                 .isPageOpened();
+    }
+
+    protected String getEnvOrReadProperty(String key) {
+        return System.getenv().getOrDefault(key, PropertyReader.getProperty(key));
     }
 
     private void createInstances() {

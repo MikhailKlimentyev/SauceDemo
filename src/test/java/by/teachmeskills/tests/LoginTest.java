@@ -14,11 +14,11 @@ import static by.teachmeskills.pages.LoginPage.LOGIN_PAGE_URL;
 public class LoginTest extends BaseTest {
 
     @DataProvider(name = "invalidUserNameAndInvalidPasswordDataProvider")
-    public static Object[][] invalidUserNameAndInvalidPasswordDataProvider() {
+    public Object[][] invalidUserNameAndInvalidPasswordDataProvider() {
         return new Object[][]{
-                {System.getenv("User"), "Invalid password", INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
-                {"Invalid user name", System.getenv("Pass"), INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
-                {System.getenv("LockedUser"), System.getenv("Pass"), LOCKED_USER_ERROR_MESSAGE},
+                {getEnvOrReadProperty("User"), "Invalid password", INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
+                {"Invalid user name", getEnvOrReadProperty("Pass"), INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
+                {getEnvOrReadProperty("LockedUser"), getEnvOrReadProperty("Pass"), LOCKED_USER_ERROR_MESSAGE},
         };
     }
 
