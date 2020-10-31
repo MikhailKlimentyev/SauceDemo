@@ -18,9 +18,6 @@ import org.testng.annotations.Listeners;
 
 import java.util.concurrent.TimeUnit;
 
-import static by.teachmeskills.domain.Constants.PASSWORD;
-import static by.teachmeskills.domain.Constants.STANDARD_USER_USER_NAME;
-
 @Listeners(TestListener.class)
 public class BaseTest {
 
@@ -53,7 +50,7 @@ public class BaseTest {
         return loginPage
                 .openPage()
                 .isPageOpened()
-                .loginSafely(STANDARD_USER_USER_NAME, PASSWORD)
+                .loginSafely(System.getenv("User"), System.getenv("Pass"))
                 .isPageOpened();
     }
 

@@ -6,7 +6,8 @@ import by.teachmeskills.tests.listeners.RetryAnalyzer;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static by.teachmeskills.domain.Constants.*;
+import static by.teachmeskills.domain.Constants.INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE;
+import static by.teachmeskills.domain.Constants.LOCKED_USER_ERROR_MESSAGE;
 import static by.teachmeskills.pages.LoginPage.LOGIN_BUTTON;
 import static by.teachmeskills.pages.LoginPage.LOGIN_PAGE_URL;
 
@@ -15,9 +16,9 @@ public class LoginTest extends BaseTest {
     @DataProvider(name = "invalidUserNameAndInvalidPasswordDataProvider")
     public static Object[][] invalidUserNameAndInvalidPasswordDataProvider() {
         return new Object[][]{
-                {STANDARD_USER_USER_NAME, "Invalid password", INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
-                {"Invalid user name", PASSWORD, INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
-                {LOCKED_OUT_USER_USER_NAME, PASSWORD, LOCKED_USER_ERROR_MESSAGE},
+                {System.getenv("User"), "Invalid password", INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
+                {"Invalid user name", System.getenv("Pass"), INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
+                {System.getenv("LockedUser"), System.getenv("Pass"), LOCKED_USER_ERROR_MESSAGE},
         };
     }
 
