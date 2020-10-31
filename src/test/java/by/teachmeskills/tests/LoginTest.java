@@ -27,7 +27,7 @@ public class LoginTest extends BaseTest {
         String productsLabel = productsPage.getProductsLabel();
         productsAssert.productsLabelShouldBeLike(productsLabel, "Products");
         int productItemsNumber = productsPage.getProductItems().size();
-        productsAssert.productsNumberShouldBeLike(productItemsNumber, 5);
+        productsAssert.productsNumberShouldBeLike(productItemsNumber, 6);
     }
 
     @Test(description = "Logout should lead to login page",
