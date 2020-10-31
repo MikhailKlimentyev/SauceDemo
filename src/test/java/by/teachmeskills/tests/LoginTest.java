@@ -2,7 +2,6 @@ package by.teachmeskills.tests;
 
 import by.teachmeskills.pages.ModalMenuPage;
 import by.teachmeskills.pages.ProductsPage;
-import by.teachmeskills.tests.listeners.RetryAnalyzer;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -31,8 +30,7 @@ public class LoginTest extends BaseTest {
         productsAssert.productsNumberShouldBeLike(productItemsNumber, 6);
     }
 
-    @Test(description = "Logout should lead to login page",
-            retryAnalyzer = RetryAnalyzer.class)
+    @Test(description = "Logout should lead to login page")
     public void logoutShouldLeadToLoginPage() {
         ProductsPage productsPage = loginSafely();
         ModalMenuPage modalMenuPage = productsPage
