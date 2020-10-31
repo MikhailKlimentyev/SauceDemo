@@ -14,6 +14,7 @@ public class LoginAssert {
 
     public void errorMessageShouldAppearAfterLoginByLockedUser(String actualErrorMessage,
                                                                String expectedErrorMessage) {
-        assertEquals(actualErrorMessage, actualErrorMessage, expectedErrorMessage);
+        assertEquals(actualErrorMessage, expectedErrorMessage, "Actual error message " +
+                "does not match with expected");
     }
 }
