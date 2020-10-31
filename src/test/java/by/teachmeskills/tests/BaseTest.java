@@ -8,6 +8,7 @@ import by.teachmeskills.pages.CartPage;
 import by.teachmeskills.pages.LoginPage;
 import by.teachmeskills.pages.ProductsPage;
 import by.teachmeskills.tests.listeners.TestListener;
+import by.teachmeskills.utils.CapabilitiesGenerator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestContext;
@@ -34,10 +35,7 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp(ITestContext context) {
-        if (System.getProperty("browser", "chrome").equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-            driver = new ChromeDriver();
-        }
+        driver = new ChromeDriver(CapabilitiesGenerator.getChromeOptions());
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         setDriverAttribute(context);
