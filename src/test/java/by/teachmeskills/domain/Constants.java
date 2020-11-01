@@ -33,10 +33,6 @@ public final class Constants {
     public static final String NAME_SORTING_PARAMETER = "name";
     public static final String PRICE_SORTING_PARAMETER = "price";
 
-    public static final String STANDARD_USER_USER_NAME = "standard_user";
-    public static final String LOCKED_OUT_USER_USER_NAME = "locked_out_user";
-    public static final String PASSWORD = "secret_sauce";
-
     public static final String REMOVE_BUTTON_NAME = "REMOVE";
     public static final String ADD_TO_CART_BUTTON_NAME = "ADD TO CART";
 
