@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="SauceDemo Regression Test" parallel="tests" thread-count="2">
     <listeners>
-        <listener class-name="by.teachmeskills.tests.listeners.TestListener" />
+        <listener class-name="by.teachmeskills.tests.listeners.TestListener"/>
         <listener class-name="by.teachmeskills.tests.listeners.AnnotationTransformer"/>
     </listeners>
 

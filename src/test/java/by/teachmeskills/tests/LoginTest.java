@@ -5,8 +5,7 @@ import by.teachmeskills.pages.ProductsPage;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static by.teachmeskills.domain.Constants.INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE;
-import static by.teachmeskills.domain.Constants.LOCKED_USER_ERROR_MESSAGE;
+import static by.teachmeskills.domain.Constants.*;
 import static by.teachmeskills.pages.LoginPage.LOGIN_BUTTON;
 import static by.teachmeskills.pages.LoginPage.LOGIN_PAGE_URL;
 
@@ -15,9 +14,12 @@ public class LoginTest extends BaseTest {
     @DataProvider(name = "invalidUserNameAndInvalidPasswordDataProvider")
     public Object[][] invalidUserNameAndInvalidPasswordDataProvider() {
         return new Object[][]{
-                {getEnvOrReadProperty("User"), "Invalid password", INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
-                {"Invalid user name", getEnvOrReadProperty("Pass"), INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
-                {getEnvOrReadProperty("LockedUser"), getEnvOrReadProperty("Pass"), LOCKED_USER_ERROR_MESSAGE},
+                {getEnvOrReadProperty(SAUCE_DEMO_USER_PROPERTY), "Invalid password",
+                        INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
+                {"Invalid user name", getEnvOrReadProperty(SAUCE_DEMO_PASS_PROPERTY),
+                        INVALID_USER_NAME_PASSWORD_ERROR_MESSAGE},
+                {getEnvOrReadProperty(SAUCE_DEMO_LOCKED_USER_PROPERTY), getEnvOrReadProperty(SAUCE_DEMO_PASS_PROPERTY),
+                        LOCKED_USER_ERROR_MESSAGE},
         };
     }
 

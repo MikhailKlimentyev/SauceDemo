@@ -19,6 +19,9 @@ import org.testng.annotations.Listeners;
 
 import java.util.concurrent.TimeUnit;
 
+import static by.teachmeskills.domain.Constants.SAUCE_DEMO_PASS_PROPERTY;
+import static by.teachmeskills.domain.Constants.SAUCE_DEMO_USER_PROPERTY;
+
 @Listeners(TestListener.class)
 public class BaseTest {
 
@@ -51,7 +54,8 @@ public class BaseTest {
         return loginPage
                 .openPage()
                 .isPageOpened()
-                .loginSafely(getEnvOrReadProperty("User"), getEnvOrReadProperty("Pass"))
+                .loginSafely(getEnvOrReadProperty(SAUCE_DEMO_USER_PROPERTY),
+                        getEnvOrReadProperty(SAUCE_DEMO_PASS_PROPERTY))
                 .isPageOpened();
     }
 

@@ -40,6 +40,10 @@ public final class Constants {
     public static final String LAST_MANE = "Totti";
     public static final String POSTAL_CODE = "121212333";
 
+    public static final String SAUCE_DEMO_USER_PROPERTY = "SauceDemoUser";
+    public static final String SAUCE_DEMO_PASS_PROPERTY = "SauceDemoPass";
+    public static final String SAUCE_DEMO_LOCKED_USER_PROPERTY = "SauceDemoLockedUser";
+
     public static final String THANK_YOU_FOR_YOUR_ORDER_MESSAGE = "THANK YOU FOR YOUR ORDER\n" +
             "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
 
