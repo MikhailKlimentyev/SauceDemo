@@ -28,6 +28,8 @@ public class LoginPage extends BasePage {
     @Step("Login with {username} and {password}")
     public ProductsPage loginSafely(String username, String password) {
         login(username, password);
+        System.out.println("username " + username);
+        System.out.println("password " + password);
         AllureUtils.takeScreenshot(driver);
         return new ProductsPage(driver);
     }
@@ -35,6 +37,8 @@ public class LoginPage extends BasePage {
     @Step("Login with {username} and {password}")
     public LoginPage tryLogin(String username, String password) {
         login(username, password);
+        System.out.println("username " + username);
+        System.out.println("password " + password);
         AllureUtils.takeScreenshot(driver);
         return this;
     }
