@@ -61,6 +61,11 @@
                         -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/1.9.1/aspectjweaver-1.9.1.jar
                         -Xmx256m
                     </argLine>
+                    <environmentVariables>
+                        <SauceDemoUser>${SauceDemoUser}</SauceDemoUser>
+                        <SauceDemoLockedUser>${SauceDemoLockedUser}</SauceDemoLockedUser>
+                        <SauceDemoPass>${SauceDemoPass}</SauceDemoPass>
+                    </environmentVariables>
                 </configuration>
                 <dependencies>
                     <dependency>
