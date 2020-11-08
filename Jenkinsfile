@@ -5,13 +5,17 @@ pipeline {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "M3"
     }
-
+    triggers {
+        cron('0 8 * * *')
+    }
+    parameters {
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+    }
     stages {
         stage('Running tests') {
             steps {
-
                 // Get some code from a GitHub repository
-                git 'https://github.com/MikhailKlimentyev/SauceDemo.git'
+                git branch: "${params.BRANCH}", url: 'https://github.com/MikhailKlimentyev/SauceDemo.git'
 
                 // Run Maven on a Unix agent.
                 //sh "mvn -Dmaven.test.failure.ignore=true clean package"
