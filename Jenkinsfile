@@ -10,7 +10,9 @@ pipeline {
     }
     parameters {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+        booleanParam(defaultValue: true, description: '', name: 'headless')
     }
+
     stages {
         stage('Running tests') {
             steps {
@@ -21,7 +23,7 @@ pipeline {
                 //sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
                 // To run Maven on a Windows agent, use
-                bat "mvn clean -DSauceDemoUser=${SauceDemoUser} -DSauceDemoLockedUser=${SauceDemoLockedUser} -DSauceDemoPass=${SauceDemoPass} install"
+                bat "mvn clean -Dheadless=${params.headless} -DSauceDemoUser=${SauceDemoUser} -DSauceDemoLockedUser=${SauceDemoLockedUser} -DSauceDemoPass=${SauceDemoPass} install"
             }
             post {
                 // If Maven was able to run the tests, even if some of the test
