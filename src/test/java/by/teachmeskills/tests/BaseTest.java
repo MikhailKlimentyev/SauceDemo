@@ -36,7 +36,9 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp(ITestContext context) {
-        driver = new ChromeDriver(CapabilitiesGenerator.getChromeOptions());
+        if (System.getProperty("browser", "chrome").equals("chrome")) {
+            driver = new ChromeDriver(CapabilitiesGenerator.getChromeOptions());
+        }
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         setDriverAttribute(context);

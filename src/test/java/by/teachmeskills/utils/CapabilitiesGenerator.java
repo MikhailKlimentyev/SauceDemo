@@ -19,7 +19,7 @@ public class CapabilitiesGenerator {
         options.addArguments("--ignore-certificate-errors");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-notifications");
-        if (Boolean.parseBoolean(System.getProperty("headless"))) {
+        if (Boolean.parseBoolean(System.getProperty("headless", "true"))) {
             options.addArguments("--headless");
         }
         // only if you are ACTUALLY running headless
