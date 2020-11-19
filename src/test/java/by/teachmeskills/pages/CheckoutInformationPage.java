@@ -1,8 +1,8 @@
 package by.teachmeskills.pages;
 
 import by.teachmeskills.pages.base.BasePage;
-import by.teachmeskills.utils.AllureUtils;
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +11,7 @@ import org.testng.Assert;
 
 import static by.teachmeskills.domain.Constants.BASE_URL;
 
+@Log4j2
 public class CheckoutInformationPage extends BasePage {
 
     public static final String CHECKOUT_INFORMATION_PAGE_URI = "/checkout-step-one.html";
@@ -28,25 +29,27 @@ public class CheckoutInformationPage extends BasePage {
 
     @Step("Fill in information with {firstName} firstName, {lastName} lastName, {postalCode} postalCode")
     public CheckoutInformationPage fillInformation(String firstName, String lastName, String postalCode) {
+        log.info(String.format("Entering first name %s in input with locator %s", firstName, FIRST_NAME_INPUT_LOCATOR));
         driver.findElement(FIRST_NAME_INPUT_LOCATOR).sendKeys(firstName);
+        log.info(String.format("Entering last name %s in input with locator %s", lastName, LAST_NAME_INPUT_LOCATOR));
         driver.findElement(LAST_NAME_INPUT_LOCATOR).sendKeys(lastName);
+        log.info(String.format("Entering postal code %s in input with locator %s", lastName, POSTAL_CODE_INPUT_LOCATOR));
         driver.findElement(POSTAL_CODE_INPUT_LOCATOR).sendKeys(postalCode);
-        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
     @Step("Click on continue button")
     public CheckoutOverviewPage clickOnContinueButton() {
+        log.info(String.format("Clicking on continue button with locator %s", CART_BUTTON_LOCATOR));
         driver.findElement(CART_BUTTON_LOCATOR).click();
-        AllureUtils.takeScreenshot(driver);
         return new CheckoutOverviewPage(driver);
     }
 
     @Step("Open checkout information page")
     @Override
     public CheckoutInformationPage openPage() {
+        log.debug(String.format("Opening checkout information page with %s url", CHECKOUT_INFORMATION_PAGE_URL));
         driver.get(CHECKOUT_INFORMATION_PAGE_URL);
-        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
@@ -55,6 +58,8 @@ public class CheckoutInformationPage extends BasePage {
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(CHECKOUT_YOUR_INFORMATION_LOCATOR));
         } catch (TimeoutException ex) {
+            log.error(String.format("Checkout information page is not opened. " +
+                    "Element with locator %s is not visible on the page", CHECKOUT_YOUR_INFORMATION_LOCATOR));
             Assert.fail("Checkout Your Information page is not opened");
         } finally {
             return this;
