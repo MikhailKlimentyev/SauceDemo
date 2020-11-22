@@ -26,7 +26,7 @@ public class CartTest extends BaseTest {
                 .getAddToCartRemoveButtonName(SAUCE_LABS_FLEECE_JACKET_NAME);
         productsAssert.buttonNameShouldBeLike(removeButtonName, REMOVE_BUTTON_NAME);
         String actualProductCount = productsPage.getProductsNumberInShoppingCart();
-        productsAssert.productNumberShouldBeLike(actualProductCount, "6");
+        productsAssert.productNumberShouldBeLike(actualProductCount, "1");
     }
 
     @Test(description = "Products page should be opened after continue shopping button clicking" +
