@@ -24,7 +24,7 @@ pipeline {
                 //sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
                 // To run Maven on a Windows agent, use
-                bat "mvn clean -Dbrowser=${params.browser} -Dheadless=${params.headless} -DSauceDemoUser=${SauceDemoUser} -DSauceDemoLockedUser=${SauceDemoLockedUser} -DSauceDemoPass=${SauceDemoPass} install"
+                bat "mvn clean -DsuiteXmlFile=src/test/resources/testng.xml -Dbrowser=${params.browser} -Dheadless=${params.headless} -DSauceDemoUser=${SauceDemoUser} -DSauceDemoLockedUser=${SauceDemoLockedUser} -DSauceDemoPass=${SauceDemoPass} install"
             }
             post {
                 // If Maven was able to run the tests, even if some of the test
