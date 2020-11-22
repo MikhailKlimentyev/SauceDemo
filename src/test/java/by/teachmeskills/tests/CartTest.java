@@ -1,15 +1,14 @@
 package by.teachmeskills.tests;
 
 import by.teachmeskills.pages.ProductsPage;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import java.util.Collections;
-import java.util.List;
 
 import static by.teachmeskills.domain.Constants.*;
 
 public class CartTest extends BaseTest {
+
 
     @Test(description = "Products page should be opened after continue shopping button clicking" +
             " if one product is added to cart")
@@ -48,12 +47,12 @@ public class CartTest extends BaseTest {
         ProductsPage productsPage = loginSafely();
         productsPage
                 .addToCart(SAUCE_LABS_FLEECE_JACKET_NAME);
-        List<WebElement> productsInShoppingCart = cartPage
+        int productsNumber = cartPage
                 .openPage()
                 .isPageOpened()
                 .clickOnRemoveButton(SAUCE_LABS_FLEECE_JACKET_NAME)
-                .getProductsInShoppingCart();
-        cartAssert.productNumberShouldBeLike(productsInShoppingCart.size(), 0);
+                .getProductsNumberInShoppingCart();
+        cartAssert.productNumberShouldBeLike(productsNumber, 0);
     }
 
     @Test(description = "Product number in shopping cart should be equal one after removing one of" +
@@ -63,12 +62,12 @@ public class CartTest extends BaseTest {
         productsPage
                 .addToCart(SAUCE_LABS_FLEECE_JACKET_NAME)
                 .addToCart(SAUCE_LABS_BACKPACK_NAME);
-        List<WebElement> productsInShoppingCart = cartPage
+        int productsNumber = cartPage
                 .openPage()
                 .isPageOpened()
                 .clickOnRemoveButton(SAUCE_LABS_FLEECE_JACKET_NAME)
-                .getProductsInShoppingCart();
-        cartAssert.productNumberShouldBeLike(productsInShoppingCart.size(), 1);
+                .getProductsNumberInShoppingCart();
+        cartAssert.productNumberShouldBeLike(productsNumber, 1);
         cartAssert.productsNameShouldBeLike(Collections.singletonList(SAUCE_LABS_BACKPACK_NAME),
                 Collections.singletonList(SAUCE_LABS_BACKPACK_NAME));
     }

@@ -1,25 +1,34 @@
 package by.teachmeskills.utils;
 
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+@Log4j2
 public class CapabilitiesGenerator {
 
     public static ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
         String driverPath = "src/test/resources/webdrivers";
         String os = System.getProperty("os.name").toLowerCase();
-        System.out.println("Operational system: " + os + "; Driver path: " + driverPath);
+        log.debug(String.format("Operational system: %s; Driver path: %s", os, driverPath));
         if (os.contains("win")) {
+            log.debug(String.format("SetProperty: webdriver.chrome.driver with %s/chromedriver.exe", driverPath));
             System.setProperty("webdriver.chrome.driver", driverPath + "/chromedriver.exe");
         } else if (os.contains("mac")) {
+            log.debug(String.format("SetProperty: webdriver.chrome.driver with %s/chromedriver", driverPath));
             System.setProperty("webdriver.chrome.driver", driverPath + "/chromedriver");
         } else {
+            log.debug(String.format("SetProperty: webdriver.chrome.driver with %s/linux/chromedriver", driverPath));
             System.setProperty("webdriver.chrome.driver", driverPath + "/linux/chromedriver");
         }
+        log.debug(String.format("ChromeOptions --ignore-certificate-errors"));
         options.addArguments("--ignore-certificate-errors");
+        log.debug(String.format("ChromeOptions --disable-popup-blocking"));
         options.addArguments("--disable-popup-blocking");
+        log.debug(String.format("ChromeOptions --disable-notifications"));
         options.addArguments("--disable-notifications");
         if (Boolean.parseBoolean(System.getProperty("headless", "true"))) {
+            log.debug(String.format("ChromeOptions --headless"));
             options.addArguments("--headless");
         }
         // only if you are ACTUALLY running headless

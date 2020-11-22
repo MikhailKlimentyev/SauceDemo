@@ -1,8 +1,8 @@
 package by.teachmeskills.pages;
 
 import by.teachmeskills.pages.base.BasePage;
-import by.teachmeskills.utils.AllureUtils;
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +11,7 @@ import org.testng.Assert;
 
 import static by.teachmeskills.domain.Constants.BASE_URL;
 
+@Log4j2
 public class LoginPage extends BasePage {
 
     public static final String LOGIN_PAGE_URI = "/index.html";
@@ -28,30 +29,27 @@ public class LoginPage extends BasePage {
     @Step("Login with {username} and {password}")
     public ProductsPage loginSafely(String username, String password) {
         login(username, password);
-        System.out.println("username " + username);
-        System.out.println("password " + password);
-        AllureUtils.takeScreenshot(driver);
         return new ProductsPage(driver);
     }
 
     @Step("Login with {username} and {password}")
     public LoginPage tryLogin(String username, String password) {
         login(username, password);
-        System.out.println("username " + username);
-        System.out.println("password " + password);
-        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
     public String getLockedUserMessage() {
-        return driver.findElement(ERROR_MESSAGE).getText();
+        log.debug(String.format("Getting error message from element with locator %s", ERROR_MESSAGE));
+        String message = driver.findElement(ERROR_MESSAGE).getText();
+        log.debug(String.format("Error message is %s", message));
+        return message;
     }
 
     @Step("Open login page")
     @Override
     public LoginPage openPage() {
+        log.debug(String.format("Opening login page with %s url", LOGIN_PAGE_URL));
         driver.get(LOGIN_PAGE_URL);
-        AllureUtils.takeScreenshot(driver);
         return this;
     }
 
@@ -60,6 +58,8 @@ public class LoginPage extends BasePage {
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
         } catch (TimeoutException ex) {
+            log.error(String.format("Login page is not opened. " +
+                    "Element with locator %s is not visible on the page", LOGIN_BUTTON));
             Assert.fail("Login page is not opened");
         } finally {
             return this;
@@ -67,6 +67,7 @@ public class LoginPage extends BasePage {
     }
 
     private void login(String username, String password) {
+        log.info(String.format("Logging in with username %s and password %s", username, password));
         driver.findElement(USERNAME_INPUT).sendKeys(username);
         driver.findElement(PASSWORD_INPUT).sendKeys(password);
         driver.findElement(LOGIN_BUTTON).click();

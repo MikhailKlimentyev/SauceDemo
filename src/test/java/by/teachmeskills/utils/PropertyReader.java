@@ -1,9 +1,12 @@
 package by.teachmeskills.utils;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@Log4j2
 public class PropertyReader {
 
     private static String propertiesPath = "/config.properties";
@@ -13,13 +16,17 @@ public class PropertyReader {
     private PropertyReader() {
     }
 
+    public static String getProperty(String propertyName) {
+        return loadProperties().getProperty(propertyName);
+    }
+
     private static String getCorrectPath() {
         if (propertiesPath.charAt(0) != '/')
             propertiesPath = "/" + propertiesPath;
         return propertiesPath;
     }
 
-    public static Properties readProperties() {
+    private static Properties readProperties() {
         properties = new Properties();
         try {
             inputStream = PropertyReader.class.getResourceAsStream(getCorrectPath());
@@ -45,12 +52,8 @@ public class PropertyReader {
         return properties != null ? properties : readProperties();
     }
 
-    public static Properties getProperties(String path) {
+    private static Properties getProperties(String path) {
         propertiesPath = path;
         return readProperties();
-    }
-
-    public static String getProperty(String propertyName) {
-        return loadProperties().getProperty(propertyName);
     }
 }
